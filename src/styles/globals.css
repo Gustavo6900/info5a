@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
+/* Paleta principal */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --foreground: #111111;
+  --input-border: #c0c0c0;
+  --input-background: #f8f8f8;
+  --button-background: #111111;
+  --button-color: #ffffff;
+  --button-hover: #333333;
+  --radius: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111111;
+    --foreground: #eeeeee;
+    --input-border: #444444;
+    --input-background: #1c1c1c;
+    --button-background: #eeeeee;
+    --button-color: #111111;
+    --button-hover: #bbbbbb;
   }
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Título */
+h1 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 280px;
+}
+
+label {
+  font-size: 0.95rem;
+}
+
+/* Inputs de data */
+input[type="date"] {
+  padding: 0.5rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius);
+  background-color: var(--input-background);
+  color: var(--foreground);
+}
+
+input[type="date"]:focus {
+  border-color: var(--foreground);
+  outline: none;
+}
+
+/* Botão de busca */
+button {
+  padding: 0.6rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--button-background);
+  color: var(--button-color);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Resultados */
+p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: var(--input-border);
+  margin: 1.5rem 0;
 }
