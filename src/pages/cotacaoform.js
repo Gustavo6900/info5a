@@ -1,25 +1,37 @@
 import { useState } from 'react';
-import useSWR from 'swr';
-import { fetcher } from '../lib/fetcher';
-
-
 
 export default function CotacaoForm() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [url, setUrl] = useState(null);
 
-  const { data, error, isLoading } = useSWR(
-    url,
-    fetcher
-  );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!startDate || !endDate) return;
-    setUrl(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`);
-  };
+  const [data, setData] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState('');
 
+ 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!startDate || !endDate) return;
+
+  const apiUrl = `https://economia.awesomeapi.com.br/json/daily/USD-BRL/365?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`;
+  
+  try {
+    setIsLoading(true);
+    setError('');
+    const res = await fetch(apiUrl);
+    const json = await res.json();
+    setData(json.reverse()); 
+  } catch (err) {
+    setError('Erro ao carregar dados.');
+    setData([]);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+ 
   const formatDate = (dateStr) => {
     const [yyyy, mm, dd] = dateStr.split('-');
     return `${yyyy}${mm}${dd}`;
